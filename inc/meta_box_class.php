@@ -9,7 +9,7 @@ class ChisholmMetaBox {
 		if(is_array($fields)) {
 			$this->fields = $fields;
 			$this->spit_out_array($this->fields);
-			return $this->$to_return;
+			return $this->to_return;
 		} else {
 			return "Not an array";
 		}
