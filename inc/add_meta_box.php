@@ -1,5 +1,5 @@
 <?php
-	function test() {
+	function testing123() {
 		$test = new ChisholmMetaBox();
 		$test_array = array(
 			'name'	=> 'test',
@@ -12,4 +12,4 @@
 	
 	
 	
-	add_action('get_footer', 'test');
+	add_action('get_footer', 'testing123');
