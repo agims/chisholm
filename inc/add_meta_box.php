@@ -7,7 +7,7 @@
 		);
 		
 		echo $test->update_fields($test_array);
-		
+		echo "It Ran";
 	}
 	
 	
