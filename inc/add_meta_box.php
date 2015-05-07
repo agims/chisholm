@@ -6,8 +6,7 @@
 			'id'	=> '1',
 		);
 		
-		echo $test->update_fields($test_array);
-		echo "It Ran";
+		$test->update_fields($test_array);
 	}
 	
 	
