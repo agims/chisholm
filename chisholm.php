@@ -26,6 +26,7 @@ if (!defined('MYPLUGIN_VERSION_NUM'))
  $files_to_require = array(
 	 'chisholm_cta.php',
 	 'meta_box_class.php',
+	 'add_meta_box.php',
 //	 'scripts.php',
 //	 'styles.php',
 //	 'checks.php',

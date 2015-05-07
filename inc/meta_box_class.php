@@ -3,11 +3,14 @@
 class ChisholmMetaBox {
 		
 	private $fields = array();
+	private $to_return = '';
 	
 	public function update_fields($fields) {
 		if(is_array($fields)) {
 			$this->fields = $fields;
-			spit_out_array($this->fields);
+			return spit_out_array($this->fields);
+		} else {
+			return "Not an array";
 		}
 	}
 
@@ -17,8 +20,9 @@ class ChisholmMetaBox {
 	}
 	
 	private function spit_out_array($the_array) {
-		echo "<pre>\n";
-		print_r($the_array);
-		echo "</pre>\n";
+		$this->to_return .= "<pre>\n";
+		$this->to_return .= print_r($the_array, TRUE);
+		$this->to_return .= "</pre>\n";
+		return $this->to_return;
 	}
 }
