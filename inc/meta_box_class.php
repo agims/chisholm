@@ -8,7 +8,8 @@ class ChisholmMetaBox {
 	public function update_fields($fields) {
 		if(is_array($fields)) {
 			$this->fields = $fields;
-			return spit_out_array($this->fields);
+			spit_out_array($this->fields);
+			return $this->$to_return;
 		} else {
 			return "Not an array";
 		}
@@ -23,6 +24,5 @@ class ChisholmMetaBox {
 		$this->to_return .= "<pre>\n";
 		$this->to_return .= print_r($the_array, TRUE);
 		$this->to_return .= "</pre>\n";
-		return $this->to_return;
 	}
 }
