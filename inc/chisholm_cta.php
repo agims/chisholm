@@ -25,7 +25,7 @@ function chisholm_cta_cpt() {
 		'label'               => __( 'chisholm_cta', 'chisholm' ),
 		'description'         => __( 'A call to action to be included in posts / pages', 'chisholm' ),
 		'labels'              => $labels,
-		'supports'            => array( 'title', 'editor', 'author', 'thumbnail', 'revisions', 'custom-fields', ),
+		'supports'            => array( 'title', 'editor', 'author', 'thumbnail', 'revisions', ),
 		'hierarchical'        => false,
 		'public'              => true,
 		'show_ui'             => true,
