@@ -12,4 +12,4 @@
 	
 	
 	
-	add_action('wp_footer', 'test');
+	add_action('get_footer', 'test');
