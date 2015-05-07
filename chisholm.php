@@ -21,15 +21,16 @@ if (!defined('MYPLUGIN_VERSION_NUM'))
 
 
  
- /*
+ 
  // Set up required files
  $files_to_require = array(
-	 'scripts.php',
-	 'styles.php',
-	 'checks.php',
-	 'modal.php',
-	 'options-page.php',
-	 'session-setup.php',
+	 'chisholm_cta.php',
+//	 'scripts.php',
+//	 'styles.php',
+//	 'checks.php',
+//	 'modal.php',
+//	 'options-page.php',
+//	 'session-setup.php',
 	 // Uncomment while testing
 	 //'temp.php',
  );
@@ -38,7 +39,7 @@ if (!defined('MYPLUGIN_VERSION_NUM'))
 	 $filename = 'inc/' . $file_to_require;
 	 require_once($filename);
  }
- */
+ 
  
 add_filter( 'plugin_action_links_' . plugin_basename(__FILE__), 'my_plugin_action_links' );
 
