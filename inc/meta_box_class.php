@@ -145,6 +145,7 @@ class ChisholmMetaBox {
 		 foreach($this->fields as $field_slug => $sub_fields) {
 			 $min = 0;
 			 $max = 0;
+			 $increment = 0;
 			 
 			 echo $this->spit_out_array($sub_fields);
 			 extract($sub_fields, EXTR_OVERWRITE);
