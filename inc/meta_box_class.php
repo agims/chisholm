@@ -215,7 +215,7 @@ class ChisholmMetaBox {
 		add_action( 'save_post', array($this, 'save_meta_box_data') );
 	}
 	
-	protected function spit_out_array($the_array) {
+	public function spit_out_array($the_array) {
 		$this->to_return .= "<pre>\n";
 		$this->to_return .= print_r($the_array, TRUE);
 		$this->to_return .= "</pre>\n";
