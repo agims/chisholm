@@ -2,8 +2,10 @@
 	function testing123() {
 		$test = new ChisholmMetaBox();
 		$test_array = array(
-			'name'	=> 'test',
-			'id'	=> '1',
+			'name'	=> array(
+				'nice_name'	=> 'Name',
+				'type'		=> 'text'
+			),
 		);
 		
 		$test->update_fields($test_array);
