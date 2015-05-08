@@ -54,8 +54,8 @@ class ChisholmMetaBox {
 	}
 	
 	public function my_meta_box_callback($post) {
-		
-		
+		spit_out_array($post);
+		return $this->to_return;
 		
 	}
 	

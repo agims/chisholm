@@ -7,6 +7,7 @@
 		);
 		
 		$test->update_fields($test_array);
+		echo $test->my_meta_box_callback();
 	}
 	
 	
