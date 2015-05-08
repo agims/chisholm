@@ -146,6 +146,7 @@ class ChisholmMetaBox {
 			 $min = 0;
 			 $max = 0;
 			 
+			 echo $this->spit_out_array($sub_fields);
 			 extract($sub_fields, EXTR_OVERWRITE);
 			 
 			 $$field_slug = get_post_meta( $post->ID, '_' . $field_slug, true );
