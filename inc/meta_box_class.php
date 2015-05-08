@@ -131,7 +131,7 @@ class ChisholmMetaBox {
 	public function my_meta_box_callback() {
 		global $post;
 		// Add an nonce field so we can check for it later.
-		wp_nonce_field( 'myplugin_meta_box', 'myplugin_meta_box_nonce' );
+		wp_nonce_field( $this->mbid . '_meta_box', $this->mbid . '_meta_box_nonce' );
 	
 		/*
 		 * Use get_post_meta() to retrieve an existing value
@@ -139,35 +139,34 @@ class ChisholmMetaBox {
 		 */
 		 		 
 		 
-		 echo '<table class="form-table">' . "\n";
-		 echo "<tbody>\n";
-		 
-		 foreach($this->fields as $field_slug => $sub_fields) {
-			 $min = 0;
-			 $max = 0;
-			 $increment = 0;
-			 
-			 echo $this->spit_out_array($sub_fields);
-			 extract($sub_fields, EXTR_OVERWRITE);
-			 
-			 $$field_slug = get_post_meta( $post->ID, '_' . $field_slug, true );
-			 
-			 if($field_slug == 'price' || $field_slug == 'original_price' && $$field_slug) {
-				 $$field_slug = number_format($$field_slug);
-			 }
-			 
-			 echo "<tr>\n";
-			 echo "<th>\n";
-			 echo '<label for="' . $field_slug . '">' . $nice_name . '</label>';
-			 echo "</th>\n";
-			 echo "<td>\n";
-			 $this->meta_input_type($type, $field_slug, $$field_slug, $min, $max, $increment);
-			 echo "</td>\n";
-			 echo "</tr>\n";
-	
-		 }
-		 echo "</tbody>\n";
-		 echo "</table>\n";
+		echo '<table class="form-table">' . "\n";
+		echo "<tbody>\n";
+		
+		foreach($this->fields as $field_slug => $sub_fields) {
+			$min = 0;
+			$max = 0;
+			$increment = 0;
+			
+			extract($sub_fields, EXTR_OVERWRITE);
+			
+			$$field_slug = get_post_meta( $post->ID, '_' . $field_slug, true );
+			
+			if($field_slug == 'price' || $field_slug == 'original_price' && $$field_slug) {
+				$$field_slug = number_format($$field_slug);
+			}
+			
+			echo "<tr>\n";
+			echo "<th>\n";
+			echo '<label for="' . $field_slug . '">' . $nice_name . '</label>';
+			echo "</th>\n";
+			echo "<td>\n";
+			$this->meta_input_type($type, $field_slug, $$field_slug, $min, $max, $increment);
+			echo "</td>\n";
+			echo "</tr>\n";
+		
+		}
+		echo "</tbody>\n";
+		echo "</table>\n";
 		
 	}
 
@@ -176,7 +175,7 @@ class ChisholmMetaBox {
 			case "text":
 				echo '<input type="text" id="' . $name . '" name="' . $name . '" value="' . esc_attr( $value ) . '" style="width: 100%;" />';
 				break;
-			case "dropdown":
+			case "number_dropdown":
 				echo '<select name="' . $name . '" id="' . $name . '">';
 				$i = $min;
 				while ($i <= $max) {
