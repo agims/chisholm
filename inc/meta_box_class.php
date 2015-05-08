@@ -2,7 +2,12 @@
 	
 class ChisholmMetaBox {
 		
-	protected $fields = array();
+	protected $fields = array(
+		'name'	=> array(
+			'nice_name'	=> 'Name',
+			'type'		=> 'text'
+		),
+	);
 	protected $screens = array();
 	protected $mbid = "metabox";
 	protected $title = FALSE;
