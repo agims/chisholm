@@ -4,7 +4,7 @@ class ChisholmMetaBox {
 		
 	private $fields = array();
 	private $screens = array();
-	private $mbid = "metabox" . rand();
+	private $mbid = "metabox";
 	private $title = FALSE;
 	private $to_return = FALSE;
 	
