@@ -12,6 +12,7 @@ class ChisholmMetaBox {
 	protected $mbid = "metabox";
 	protected $title = FALSE;
 	protected $to_return = FALSE;
+	protected $type_of_box = 'input';
 	protected $states = array(
 		"Alabama"				=> "AL",
 		"Alaska"				=> "AK",
@@ -83,6 +84,16 @@ class ChisholmMetaBox {
 		"Armed Forces Pacific"	=> "AP"
 	);
 	
+	public function update_type_of_box($type_of_box = 'input') {
+		switch ($type_of_box) {
+			case "info":
+				$this->type_of_box = 'info';
+				break;
+			default:
+				$this->type_of_box = 'input';
+		}
+	}
+	
 	public function update_fields($fields) {
 		if(is_array($fields)) {
 			$this->fields = $fields;
@@ -137,33 +148,39 @@ class ChisholmMetaBox {
 		 * Use get_post_meta() to retrieve an existing value
 		 * from the database and use the value for the form.
 		 */
-		 		 
-		 
+		 		
+		
 		echo '<table class="form-table">' . "\n";
 		echo "<tbody>\n";
 		
-		foreach($this->fields as $field_slug => $sub_fields) {
-			$min = 0;
-			$max = 0;
-			$increment = 0;
-			
-			extract($sub_fields, EXTR_OVERWRITE);
-			
-			$$field_slug = get_post_meta( $post->ID, '_' . $field_slug, true );
-			
-			if($field_slug == 'price' || $field_slug == 'original_price' && $$field_slug) {
-				$$field_slug = number_format($$field_slug);
-			}
-			
-			echo "<tr>\n";
-			echo "<th>\n";
-			echo '<label for="' . $field_slug . '">' . $nice_name . '</label>';
-			echo "</th>\n";
-			echo "<td>\n";
-			$this->meta_input_type($type, $field_slug, $$field_slug, $min, $max, $increment);
-			echo "</td>\n";
-			echo "</tr>\n";
+		if($this->type_of_box == 'input') {
 		
+			foreach($this->fields as $field_slug => $sub_fields) {
+				$min = 0;
+				$max = 0;
+				$increment = 0;
+				
+				extract($sub_fields, EXTR_OVERWRITE);
+				
+				$$field_slug = get_post_meta( $post->ID, '_' . $field_slug, true );
+				
+				if($field_slug == 'price' || $field_slug == 'original_price' && $$field_slug) {
+					$$field_slug = number_format($$field_slug);
+				}
+				
+				echo "<tr>\n";
+				echo "<th>\n";
+				echo '<label for="' . $field_slug . '">' . $nice_name . '</label>';
+				echo "</th>\n";
+				echo "<td>\n";
+				$this->meta_input_type($type, $field_slug, $$field_slug, $min, $max, $increment);
+				echo "</td>\n";
+				echo "</tr>\n";
+			
+			}
+		
+		} elseif($this->type_of_box == 'info') {
+			echo "Info Box here";
 		}
 		echo "</tbody>\n";
 		echo "</table>\n";

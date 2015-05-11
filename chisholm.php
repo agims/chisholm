@@ -27,14 +27,8 @@ if (!defined('MYPLUGIN_VERSION_NUM'))
 	 'chisholm_cta.php',
 	 'meta_box_class.php',
 	 'add_meta_box.php',
-//	 'scripts.php',
-//	 'styles.php',
-//	 'checks.php',
-//	 'modal.php',
-//	 'options-page.php',
-//	 'session-setup.php',
-	 // Uncomment while testing
-	 //'temp.php',
+	 'content_filter.php',
+	 'shortcode.php',
  );
  
  foreach($files_to_require as $file_to_require) {
