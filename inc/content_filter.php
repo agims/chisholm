@@ -50,7 +50,8 @@
 		
 
 		$content = substr_replace($content, $cta_content, $location, 0);
-		
+
+/*	Diagnostic Content		
 		$content .= "<pre>\n";
 		$content .= "Needle = " . htmlentities($needle) . "\n";
 		$content .= "Hook at $which_hook\n";
@@ -59,6 +60,7 @@
 		$content .= "Location is $location\n";
 		$content .= "Length of content is $content_length\n";
 		$content .= "</pre>\n";
+*/
 		
 		return $content;
 

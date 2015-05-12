@@ -25,7 +25,7 @@ if ( ! function_exists('chisholm_cta_cpt') ) {
 			'label'               => __( 'chisholm_cta', 'chisholm' ),
 			'description'         => __( 'A call to action to be included in posts / pages', 'chisholm' ),
 			'labels'              => $labels,
-			'supports'            => array( 'title', 'editor', 'author', 'thumbnail', 'revisions', ),
+			'supports'            => array( 'title', 'editor', 'revisions', ),
 			'hierarchical'        => false,
 			'public'              => true,
 			'show_ui'             => true,

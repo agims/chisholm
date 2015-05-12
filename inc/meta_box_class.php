@@ -13,6 +13,7 @@ class ChisholmMetaBox {
 	protected $title = FALSE;
 	protected $to_return = FALSE;
 	protected $type_of_box = 'input';
+	protected $info_box_content = NULL;
 	protected $states = array(
 		"Alabama"				=> "AL",
 		"Alaska"				=> "AK",
@@ -139,8 +140,10 @@ class ChisholmMetaBox {
 		
 	}
 	
-	public function my_meta_box_callback() {
-		global $post;
+	public function my_meta_box_callback($post) {
+//		global $post;
+				
+		
 		// Add an nonce field so we can check for it later.
 		wp_nonce_field( $this->mbid . '_meta_box', $this->mbid . '_meta_box_nonce' );
 	
@@ -150,10 +153,9 @@ class ChisholmMetaBox {
 		 */
 		 		
 		
-		echo '<table class="form-table">' . "\n";
-		echo "<tbody>\n";
-		
 		if($this->type_of_box == 'input') {
+			echo '<table class="form-table">' . "\n";
+			echo "<tbody>\n";
 		
 			foreach($this->fields as $field_slug => $sub_fields) {
 				$min = 0;
@@ -163,11 +165,7 @@ class ChisholmMetaBox {
 				extract($sub_fields, EXTR_OVERWRITE);
 				
 				$$field_slug = get_post_meta( $post->ID, '_' . $field_slug, true );
-				
-				if($field_slug == 'price' || $field_slug == 'original_price' && $$field_slug) {
-					$$field_slug = number_format($$field_slug);
-				}
-				
+								
 				echo "<tr>\n";
 				echo "<th>\n";
 				echo '<label for="' . $field_slug . '">' . $nice_name . '</label>';
@@ -178,20 +176,79 @@ class ChisholmMetaBox {
 				echo "</tr>\n";
 			
 			}
-		
+
+			echo "</tbody>\n";
+			echo "</table>\n";
+
 		} elseif($this->type_of_box == 'info') {
 			echo "Info Box here";
 		}
-		echo "</tbody>\n";
-		echo "</table>\n";
 		
 	}
+	
+	/*
+		Meta Input Type
+			Type:
+				text
+					$name - the ID and Name for the input
+					$value - the initial value of the field
+					$disabled - whether or not the input is disabled
 
-	protected function meta_input_type($type="text", $name, $value, $min=1, $max=5, $increment=1) {
+				dropdown
+					$name - the ID and Name for the input
+					$value - the initial value of the field
+					$values - an array with the following structure (can be multiple):
+						'$nicename'	=> '$value_to_be_stored'
+							Store it where the nicename is stored as the key and
+							the value to be stored as the value
+						example:
+						array(
+							'Rob'		=> 'rob',
+							'Chris'		=> 'chris',
+							'W. Gene'	=> 'gene',
+							'Sherry'	=> 'sherry'
+						)
+					$disabled - whether or not the input is disabled
+
+				number_dropdown
+					$name - the ID and Name for the input
+					$value - the initial value of the field
+					$values - an array with the following:
+						'min'		=> Minimum Value
+						'max'		=> Maximum Value
+						'increment'	=> How do you want it incremented?
+					$disabled - whether or not the input is disabled
+
+				state_dropdown
+					$name - the ID and Name for the input
+					$value - the initial value of the field
+					$disabled - whether or not the input is disabled
+
+				textarea
+					$name - the ID and Name for the input
+					$value - the initial value of the field
+					$disabled - whether or not the input is disabled
+					
+	*/
+	protected function meta_input_type($type="text", $name, $value=NULL, $values = array(), $disabled = FALSE) {
 		switch ($type) {
+
 			case "text":
 				echo '<input type="text" id="' . $name . '" name="' . $name . '" value="' . esc_attr( $value ) . '" style="width: 100%;" />';
 				break;
+
+			case "dropdown":
+				echo '<select name="' . $name . '" id="' . $name . '">';
+				foreach ($values as $key => $dvalue) {
+					if($dvalue == $value) {
+						$selected = " selected";
+					} else {
+						$selected = "";
+					}
+					echo '<option value="' . $dvalue . '"' . $selected . '>' . $key . '</option>' . "\n";
+				}
+				break;			
+
 			case "number_dropdown":
 				echo '<select name="' . $name . '" id="' . $name . '">';
 				$i = $min;
@@ -206,6 +263,7 @@ class ChisholmMetaBox {
 				}
 				echo '</select>';
 				break;
+
 			case "state_dropdown":
 				echo '<select name="' . $name . '" id="' . $name . '">';
 				foreach($this->states as $state_name => $state_abbr) {
@@ -221,13 +279,75 @@ class ChisholmMetaBox {
 				}
 				echo '</select>';
 				break;
+
 			case "textarea":
 				echo '<textarea id="' . $name . '" name="' . $name . '" rows=6 style="width: 100%;">' . esc_attr( $value ) . '</textarea>';
 				break;
 		}
 	}
 	
-	public function add_actions() {
+	public function save_meta_box_data($post_id) {
+		/*
+		 * We need to verify this came from our screen and with proper authorization,
+		 * because the save_post action can be triggered at other times.
+		 */
+	
+		// Check if our nonce is set.
+		
+		$nonce_name = $this->mbid . '_meta_box';
+		$nonce_value = $this->mbid . '_meta_box_nonce';
+		
+		if ( ! isset( $_POST[$nonce_value] ) ) {
+			return;
+		}
+	
+		// Verify that the nonce is valid.
+		if ( ! wp_verify_nonce( $_POST[$nonce_value], $nonce_name ) ) {
+			return;
+		}
+	
+		// If this is an autosave, our form has not been submitted, so we don't want to do anything.
+		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+			return;
+		}
+	
+		// Check the user's permissions.
+		if ( isset( $_POST['post_type'] ) && 'page' == $_POST['post_type'] ) {
+	
+			if ( ! current_user_can( 'edit_page', $post_id ) ) {
+				return;
+			}
+	
+		} else {
+	
+			if ( ! current_user_can( 'edit_post', $post_id ) ) {
+				return;
+			}
+		}
+	
+		/* OK, it's safe for us to save the data now. */
+		
+		foreach($this->fields as $field => $sub_fields) {
+			
+			$fieldname = '_' . $field;
+			
+			// Make sure that it is set.
+			if ( ! isset( $_POST[$field] ) ) {
+				return;
+			}
+			
+			
+			// Sanitize user input.
+			$data = sanitize_text_field( $_POST[$property_field] );
+			
+			// Update the meta field in the database.
+			update_post_meta( $post_id, $fieldname, $data );
+		}
+		
+	
+	}
+	
+	public function add_box() {
 		add_action( 'add_meta_boxes', array($this, 'add_my_meta_box') );
 		add_action( 'save_post', array($this, 'save_meta_box_data') );
 	}
