@@ -8,7 +8,7 @@
 			$$option = get_option($option);
 		}
 		
-		if((is_single() || is_home() || is_archive()) && $chisholm_use_cta_posts == 'on') {
+		if((is_single() || is_home()) && $chisholm_use_cta_posts == 'on') {
 			$bob = "It's a single";
 			$content = chisholm_add_cta($content, $chisholm_cta_id_for_posts, "</" . $chisholm_html_hook_posts . ">", $chisholm_which_hook_posts);
 		} elseif(is_page() && $chisholm_use_cta_pages == 'on') {
@@ -43,11 +43,7 @@
 		
 		$cta_post = get_post($cta_id);
 		$cta_content = $cta_post->post_content;
-		//$cta_content = apply_filters('the_content', $cta_content);
-		//$cta_content = str_replace(']]>', ']]&gt;', $cta_content);
 
-
-		
 		$content = substr_replace($content, $cta_content, $location, 0);
 		
 		return $content;
