@@ -1,8 +1,29 @@
 <?php
 	
 	function chisholm_content_filter($content) {
-
-		$needle = "</p>";
+		
+		global $chisholm_needed_options;
+		
+		foreach($chisholm_needed_options as $option => $value) {
+			$$option = get_option($option);
+		}
+		
+		if((is_single() || is_home() || is_archive()) && $chisholm_use_cta_posts == 'on') {
+			$bob = "It's a single";
+			$content = chisholm_add_cta($content, $chisholm_cta_id_for_posts, "</" . $chisholm_html_hook_posts . ">", $chisholm_which_hook_posts);
+		} elseif(is_page() && $chisholm_use_cta_pages == 'on') {
+			$bob = "It's a page";
+			$content = chisholm_add_cta($content, $chisholm_cta_id_for_pages, "</" . $chisholm_html_hook_pages . ">", $chisholm_which_hook_pages);
+		}
+		
+		
+		return $content;
+	}
+	
+	add_filter('the_content', 'chisholm_content_filter');
+	
+	function chisholm_add_cta($content, $cta_id = FALSE, $needle = "</p>", $which_hook = 2) {
+		
 		$lastPos = 0;
 		$positions = array();
 		
@@ -11,20 +32,23 @@
 		    $lastPos = $lastPos + strlen($needle);
 		}
 
-		//$content = "<pre>\n" . print_r($positions, false) . "</pre>\n" . $content;
+		$position = $which_hook - 1;
+		$offset = strlen($needle);
 		
-		if(isset($positions[1])) {
-			$location = $positions[1] + 4;
+		if(isset($positions[$position])) {
+			$location = $positions[$position] + $offset;
 		} else {
 			$location = strlen($content);
 		}
 		
+		$cta_post = get_post($cta_id);
+		$cta_content = apply_filters('the_content', $cta_post->post_content);
+		//$cta_content = str_replace(']]>', ']]&gt;', $cta_content);
+
+
 		
-		$added_text = '<div style="background-color: #FF9999; border: 1px solid #FF0000; border-radius: 8px; box-sizing: border-box; margin-bottom: 1.6842em; margin-left: -0.5em; margin-right: -0.5em; padding: 0.25em 0.5em 0;">This is the added text. It was placed at character ' . $location . '.  I know I am excited.  Are you?</div>';
-		
-		$content = substr_replace($content, $added_text, $location, 0);
+		$content = substr_replace($content, $cta_content, $location, 0);
 		
 		return $content;
+
 	}
-	
-	add_filter('the_content', 'chisholm_content_filter');
