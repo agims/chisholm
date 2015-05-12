@@ -42,7 +42,8 @@
 		}
 		
 		$cta_post = get_post($cta_id);
-		$cta_content = apply_filters('the_content', $cta_post->post_content);
+		$cta_content = $cta_post->post_content;
+		//$cta_content = apply_filters('the_content', $cta_content);
 		//$cta_content = str_replace(']]>', ']]&gt;', $cta_content);
 
 
