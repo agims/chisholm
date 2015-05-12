@@ -31,6 +31,7 @@ if (!defined('CHISHOLM_VERSION_NUM'))
 	 'add_meta_box.php',
 	 'content_filter.php',
 	 'shortcode.php',
+	 'do-shortcode-widget.php',
  );
  
  foreach($files_to_require as $file_to_require) {
