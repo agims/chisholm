@@ -102,6 +102,53 @@
 							</select>
 						</td>
 					</tr>
+					<tr id="html_hook_posts">
+						<th scope="row">
+							<label for="chisholm_html_hook_posts">What HTML Element should we hook to?</label>
+						</th>
+						<td>
+							<select name="chisholm_html_hook_posts" id="chisholm_html_hook_posts">
+								<?php
+									$elements = array(
+										'Paragraph'		=> 'p',
+										'Div'			=> 'div',
+										'Section'		=> 'section',	
+									);
+									
+									foreach($elements as $element_name => $element_tag) {
+										if($chisholm_html_hook_posts == $element_tag) {
+											$selected = " selected='selected'";
+										} else {
+											$selected = '';
+										}
+										echo '<option value="' . $element_tag . '" ' . $selected . '>' . $element_name . '</option>' . "\n";
+									}
+								?>
+							</select>
+						</td>
+					</tr>
+					<tr id="which_hook_posts">
+						<th scope="row">
+							<label for="chisholm_which_hook_posts">After how many of hooks should the CTA Show up?</label><br />
+							<small>Note:  If there are less than the number specified, it will show up at the end.</small>
+						</th>
+						<td>
+							<select name="chisholm_which_hook_posts" id="chisholm_which_hook_posts">
+								<?php
+									$numbers = array(1, 2, 3, 4, 5, 6, 7, 8);
+									
+									foreach($numbers as $number) {
+										if($chisholm_which_hook_posts == $number) {
+											$selected = " selected='selected'";
+										} else {
+											$selected = '';
+										}
+										echo '<option value="' . $number . '" ' . $selected . '>' . $number . '</option>' . "\n";
+									}
+								?>
+							</select>
+						</td>
+					</tr>
 				</tbody>
 			</table>
 			<?php submit_button(); ?>
@@ -133,6 +180,53 @@
 											$selected = '';
 										}
 										echo '<option value="' . $cta_id . '" ' . $selected . '>' . $cta_title . '</option>' . "\n";
+									}
+								?>
+							</select>
+						</td>
+					</tr>
+					<tr id="html_hook_pages">
+						<th scope="row">
+							<label for="chisholm_html_hook_pages">What HTML Element should we hook to?</label>
+						</th>
+						<td>
+							<select name="chisholm_html_hook_pages" id="chisholm_html_hook_pages">
+								<?php
+									$elements = array(
+										'Paragraph'		=> 'p',
+										'Div'			=> 'div',
+										'Section'		=> 'section',	
+									);
+									
+									foreach($elements as $element_name => $element_tag) {
+										if($chisholm_html_hook_pages == $element_tag) {
+											$selected = " selected='selected'";
+										} else {
+											$selected = '';
+										}
+										echo '<option value="' . $element_tag . '" ' . $selected . '>' . $element_name . '</option>' . "\n";
+									}
+								?>
+							</select>
+						</td>
+					</tr>
+					<tr id="which_hook_pages">
+						<th scope="row">
+							<label for="chisholm_which_hook_pages">After how many of hooks should the CTA Show up?</label><br />
+							<small>Note:  If there are less than the number specified, it will show up at the end.</small>
+						</th>
+						<td>
+							<select name="chisholm_which_hook_pages" id="chisholm_which_hook_pages">
+								<?php
+									$numbers = array(1, 2, 3, 4, 5, 6, 7, 8);
+									
+									foreach($numbers as $number) {
+										if($chisholm_which_hook_pages == $number) {
+											$selected = " selected='selected'";
+										} else {
+											$selected = '';
+										}
+										echo '<option value="' . $number . '" ' . $selected . '>' . $number . '</option>' . "\n";
 									}
 								?>
 							</select>
