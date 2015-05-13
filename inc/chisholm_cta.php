@@ -30,7 +30,7 @@ if ( ! function_exists('chisholm_cta_cpt') ) {
 			'public'              => true,
 			'show_ui'             => true,
 			'show_in_menu'        => true,
-			'menu_position'       => 29,
+			'menu_position'       => 49,
 			'menu_icon'           => 'dashicons-format-chat',
 			'show_in_admin_bar'   => true,
 			'show_in_nav_menus'   => false,
