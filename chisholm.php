@@ -2,7 +2,7 @@
 /*
 Plugin Name:		Chisholm
 Plugin URI:			https://github.com/agims/chisholm
-Description:		This is a WordPress Plugin to allow for adding a call to action (CTA) into your site either by injecting it into <code>the_content()</code> or having the user use a shortcode. - <strong>Version 1.0 - Mockingbird</strong>
+Description:		This is a WordPress Plugin to allow for adding a call to action (CTA) into your site either by injecting it into <code>the_content()</code> or having the user use a shortcode. - <strong>Version 1.0.1 - Mockingbird</strong>
 Version:			1.0.1
 Author:				Chris G. Clapp
 Author URI:			http://www.chrisclapp.com
