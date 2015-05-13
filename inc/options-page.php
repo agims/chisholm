@@ -256,9 +256,9 @@
 	
 	function add_options_page_to_chisholm($wp_admin_bar) {
 		$add_chisholm_node_args = array(
-			'id'			=> 'wp-admin-bar-options',
-			'title'			=> 'Options',
-			'href'			=> get_option('siteurl') . '/wp-admin/options.php',
+			'id'			=> 'wp-admin-bar-chisholm-cta',
+			'title'			=> 'Chisholm CTAs',
+			'href'			=> get_option('siteurl') . '/wp-admin/edit.php?post_type=chisholm_cta',
 			'parent'		=> 'wp-admin-bar-chisholm',
 		);
 		
